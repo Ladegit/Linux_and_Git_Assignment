@@ -41,4 +41,4 @@ cp "Transformed/2023_year_finance.csv" Gold/
 Your manager has asked you to schedule the script to run daily using cron jobs (research this). Schedule the script to run every day at 12:00 AM.
 I used the following command to schedule the script to run daily
 
-crontab -e
+ghk

@@ -39,6 +39,150 @@ cp "Transformed/2023_year_finance.csv" Gold/
 
 # Task 2
 Your manager has asked you to schedule the script to run daily using cron jobs (research this). Schedule the script to run every day at 12:00 AM.
-I used the following command to schedule the script to run daily
+I used the following command to schedule the script to run daily by 12AM
 
+MIN HOUR DOM MON DOW CMD
 crontab -e
+0 0 * * * C:\Lade\Linux and Git\Git_Assignment\CDE_Git_Assignment_OmoladeBisiriyu_.sh
+0 0 * * * . $HOME/.profile; C:\Lade\Linux and Git\Git_Assignment\CDE_Git_Assignment_OmoladeBisiriyu_.sh
+
+
+# Task 3 
+Write a Bash script to move all CSV and JSON files from one folder to another folder named json_and_CSV. Use any Json and CSV of your choice, the script should be able to work with one or more Json and CSV files.
+
+I wrote this bash script below to do the task
+
+#!/bin/bash
+
+# Define the source and destination directories
+sample_data="C:\Lade\Linux and Git\Git_Assignment\sample_data" 
+json_and_csv="C:\Lade\Linux and Git\Git_Assignment"  
+
+# Create the destination directory if it does not exist
+if [ ! -d "$json_and_csv" ]; then
+    mkdir -p "$json_and_csv"
+    echo "Created directory: $json_and_csv"
+fi
+
+# Move all CSV and JSON files from the source directory to the destination directory
+echo "Moving CSV and JSON files from $sample_data to $json_and_csv..."
+mv "$sample_data"/*.csv "$json_and_csv"
+mv "$sample_data"/*.json "$json_and_csv"
+
+echo "Move complete."
+
+CoreDataEngineers is diversifying into the sales of goods and services. To understand the market, your organization needs to analyze their competitor, Parch and Posey. Download the CSV file using this link to your local PC. After downloading, do the following:
+
+Write a Bash script that iterates over and copies each of the CSV files into a PostgreSQL database (name the database posey).
+
+After this, write SQL scripts with detailed comments to answer the following questions posed by your manager (Ayoola):
+
+/* Find a list of order IDs where either gloss_qty or poster_qty is greater than 4000. Only include the id field in the resulting table. */
+
+/* Write a query that returns a list of orders where the standard_qty is zero and either the gloss_qty or poster_qty is over 1000. */
+
+/* Find all the company names that start with a 'C' or 'W', and where the primary contact contains 'ana' or 'Ana', but does not contain 'eana'. */
+
+/* Provide a table that shows the region for each sales rep along with their associated accounts. Your final table should include three columns: the region name, the sales rep name, and the account name. Sort the accounts alphabetically (A-Z) by account name. */
+
+# Task 4
+
+CoreDataEngineers is diversifying into the sales of goods and services. To understand the market, your organization needs to analyze their competitor, Parch and Posey. Download the CSV file using this link to your local PC. After downloading, do the following:
+
+Write a Bash script that iterates over and copies each of the CSV files into a PostgreSQL database (name the database posey).
+
+After this, write SQL scripts with detailed comments to answer the following questions posed by your manager (Ayoola):
+
+/* Find a list of order IDs where either gloss_qty or poster_qty is greater than 4000. Only include the id field in the resulting table. */
+
+/* Write a query that returns a list of orders where the standard_qty is zero and either the gloss_qty or poster_qty is over 1000. */
+
+/* Find all the company names that start with a 'C' or 'W', and where the primary contact contains 'ana' or 'Ana', but does not contain 'eana'. */
+
+/* Provide a table that shows the region for each sales rep along with their associated accounts. Your final table should include three columns: the region name, the sales rep name, and the account name. Sort the accounts alphabetically (A-Z) by account name. */
+
+
+# A. I wrote this bash script to iterate over and copy each of these cav files into a PostgreSQL database
+#!/bin/bash
+#variables declaration from Postgres Server
+#!/bin/bash
+
+# Configuration variables
+HOST_IP="localhost"
+USER="postgres"
+PORT="5432"
+PASSWORD="Ladey400*"
+
+# Export password for PostgreSQL authentication
+export PGPASSWORD="$PASSWORD"
+
+# Function to execute PostgreSQL command
+execute_psql() {
+    psql -h "$HOST_IP" -U "$USER" -p "$PORT" -c "$1"
+}
+
+# Attempt to connect to the database
+execute_psql "\q"
+if [ $? -eq 0 ]; then
+    echo "DB connected"
+else
+    echo "Failed Connection"
+    exit 1
+fi
+
+# Attempt to create a new database
+execute_psql "CREATE DATABASE POSEY;"
+if [ $? -eq 0 ]; then
+    echo "POSEY db created"
+else
+    echo "Failed to create"
+    exit 1
+fi
+
+# Below are the scripts that I used to answer the questions given by my manager - Ayoola
+
+/*Script 1
+Find a list of order IDs where either gloss_qty or poster_qty is greater than 4000. Only include the id field in the resulting table*/
+
+select id from public.orders where gloss_qty >4000 or poster_qty >4000;
+
+
+
+
+/*Scripts 2
+Write a query that returns a list of orders where the standard_qty is zero and either the gloss_qty or poster_qty is over 1000*/
+
+select id from public.orders where standard_qty =0 and gloss_qty >1000 or poster_qty >1000;
+
+/*Scripts 3
+Find all the company names that start with a 'C' or 'W', and where the primary contact contains 'ana' or 'Ana', but does not contain 'eana'.*/
+SELECT * 
+FROM public.accounts 
+WHERE 
+    (name LIKE 'C%' OR name LIKE 'W%') 
+    AND 
+    (primary_poc LIKE '%ana%' OR primary_poc LIKE 'Ana%')
+    AND 
+    primary_poc NOT LIKE '%eana%';
+
+/*Scripts 3
+Provide a table that shows the region for each sales rep along with their associated accounts. Your final table should include three columns: the region name, the sales rep name, and the account name. Sort the accounts alphabetically (A-Z) by account name.*/ 
+WITH t1 AS (
+    SELECT 
+        a.name AS region_name, 
+        b.name AS sales_rep_name, 
+        c.name AS account_name
+    FROM 
+        region a
+        LEFT JOIN sales_reps b ON a.id = b.region_id
+        LEFT JOIN accounts c ON b.id = c.sales_rep_id
+		order by account_name
+)
+SELECT * FROM t1;
+
+# Below is my ETL architectural design
+
+
+
+
+

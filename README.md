@@ -128,7 +128,7 @@ After this, write SQL scripts with detailed comments to answer the following que
 
 /* Provide a table that shows the region for each sales rep along with their associated accounts. Your final table should include three columns: the region name, the sales rep name, and the account name. Sort the accounts alphabetically (A-Z) by account name. */
 
-# A. I wrote this bash script to iterate over and copy each of these cav files into a PostgreSQL database
+# A. I wrote this bash script to iterate over and copy each of these csv files into a PostgreSQL database
 #!/bin/bash
 #variables declaration from Postgres Server
 #!/bin/bash
@@ -179,6 +179,7 @@ Write a query that returns a list of orders where the standard_qty is zero and e
 
 select id from public.orders where standard_qty =0 and gloss_qty >1000 or poster_qty >1000;
 
+
 /*Scripts 3
 Find all the company names that start with a 'C' or 'W', and where the primary contact contains 'ana' or 'Ana', but does not contain 'eana'.*/
 SELECT * 
@@ -189,6 +190,7 @@ WHERE
     (primary_poc LIKE '%ana%' OR primary_poc LIKE 'Ana%')
     AND 
     primary_poc NOT LIKE '%eana%';
+
 
 /*Scripts 4
 Provide a table that shows the region for each sales rep along with their associated accounts. Your final table should include three columns: the region name, the sales rep name, and the account name. Sort the accounts alphabetically (A-Z) by account name.*/ 
